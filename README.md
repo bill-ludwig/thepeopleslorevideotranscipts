@@ -7,7 +7,7 @@ Video Transcript Search Engine
 - [How to: SEARCH keywords in all Video Transcripts](#how-to-search-keywords-in-all-video-transcripts)
 - [How to: UPDATE your database (eg after Thursday video uploaded)](#how-to-update-your-database-eg-after-thursday-video-uploaded)
 - [How to: Save a FULL Video Transcript](#how-to_save-a-full-video-transcript)
-  
+- [How to: WATCH the VIDEO side-by-side with the TRANSCRIPT](how-to-watch-the-video-side-by-side-with-the-transcript)  
 
 ## How to download, install, and open transcript database
 
@@ -108,6 +108,25 @@ Video Transcript Search Engine
 
 <img width="1884" height="846" alt="image" src="https://github.com/user-attachments/assets/a29a64a0-7584-4c20-9665-4ac8291252d7" />
 
+# How to: WATCH the VIDEO side-by-side with the TRANSCRIPT
+
+### 1. On the SEARCH page (or the FULL TRANSCRIPT Page) RIGHT CLICK  on the Video: Title
+#### [Note:  this will open a "DROP DOWN" menu ]
+<img width="1718" height="818" alt="image" src="https://github.com/user-attachments/assets/588d4bc3-dd67-4ab8-aeed-99464f97f05f" />
+
+### 2. SELECT "Open Link in Split View"
+
+<img width="516" height="90" alt="image" src="https://github.com/user-attachments/assets/38717755-afdc-442d-9fd9-69a8c1b6e521" />
+### 3. Video OPEN's next to your Transcript. 
+
+<img width="2056" height="1050" alt="image" src="https://github.com/user-attachments/assets/234320f3-4622-4cfd-85f4-d68073b365ef" />
+
+### You can now SCROLL your TRANSCRIPT up/down on the LEFT side. 
+### On the RIGHT side the VIDEO will play.  
+### You can jump your video to the same "TIME STAMP" you have on the TRANSCRIPT to watch and see the text at same time.
+
+
+# enjoy...
 
 
 
