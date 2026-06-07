@@ -65,7 +65,7 @@ Video Transcript Search Engine
 
 ### 14.  Your database is now ready for searching...! 
 
-# How to Seach keywords in all Video Transcripts
+# How to: SEARCH keywords in all Video Transcripts
 
 ### 1.  Enter you "search words" in the "Seach transcripts" search box AND click on "Search Button"
 #### [let's search:  "Chocolate Milk"]
