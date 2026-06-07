@@ -9,7 +9,7 @@ Video Transcript Search Engine
 - [How to: Save a FULL Video Transcript](#how-to_save-a-full-video-transcript)
 - [How to: WATCH the VIDEO side-by-side with the TRANSCRIPT](how-to-watch-the-video-side-by-side-with-the-transcript)  
 
-## How to download, install, and open transcript database
+## How to: download, install, and open transcript database
 
 ### 1. Find the "Code" button above (☝️☝️☝️☝️☝️☝️☝️)
     
