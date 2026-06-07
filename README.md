@@ -3,13 +3,13 @@ Video Transcript Search Engine
 
 ## Instructions
 
-- [How to download, install, open transcript database](#how-to-download-install-open-transcript-database)
-- [How to Seach keywords in all Video Transcripts](#how-to-search-keywords-in-all-video-transcripts)
-- [How to UPDATE your database (eg after Thursday video uploaded)](#how-to-update-your-database-eg-after-thursday-video-uploaded)
-
+- [How to: download, install, and OPEN transcript database](#how-to-download-install-open-transcript-database)
+- [How to: SEARCH keywords in all Video Transcripts](#how-to-search-keywords-in-all-video-transcripts)
+- [How to: UPDATE your database (eg after Thursday video uploaded)](#how-to-update-your-database-eg-after-thursday-video-uploaded)
+- [How to: Save a FULL Video Transcript](#how-to_save-a-full-video-transcript)
   
 
-## How to download, install, open transcript database
+## How to download, install, and open transcript database
 
 ### 1. Find the "Code" button above (☝️☝️☝️☝️☝️☝️☝️)
     
@@ -73,6 +73,8 @@ Video Transcript Search Engine
 <img width="1748" height="625" alt="image" src="https://github.com/user-attachments/assets/2c1d7bf8-948d-443a-bcb9-2886b5a29fdd" />
 
 ### 2.  Each video is listed with hits for your search.  
+#### [Note: Here three (3) videos have the words "Chocolate Milk"]
+
 <img width="2069" height="1204" alt="image" src="https://github.com/user-attachments/assets/301d78f3-39a4-44b8-aa47-71a7b0dba099" />
 
 ### 3. click on the Triangle next to each video to open the results for that video
@@ -80,3 +82,5 @@ Video Transcript Search Engine
 <img width="2034" height="1125" alt="image" src="https://github.com/user-attachments/assets/7f62f687-7a30-4890-8359-320e1e1575ab" />
 
 ### 3.  Results are marked in YELLOW.
+
+# How to: Save a FULL Video Transcript
