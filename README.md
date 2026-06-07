@@ -11,7 +11,7 @@ Video Transcript Search Engine
 
 ## How to download, install, open transcript database
 
-### 1. Find the "Code" button above
+### 1. Find the "Code" button above (☝️☝️☝️☝️☝️☝️☝️)
     
 <img width="204" height="88" alt="image" src="https://github.com/user-attachments/assets/19b8282f-d8e8-4e08-bb4b-fda95b87e46f" />
 <img width="203" height="93" alt="image" src="https://github.com/user-attachments/assets/4d7bd4cb-0c1b-4653-9e3a-22e404b7a02f" />
@@ -34,14 +34,12 @@ Video Transcript Search Engine
 <img width="573" height="630" alt="image" src="https://github.com/user-attachments/assets/bbc0ec1e-4d7b-4e43-a06a-73e7e80d8f92" />
 
 ### 6.  You should see a Folder that looks something like this
-[folder: thepeopleslorevideotranscipts-main ]
+#### [folder: thepeopleslorevideotranscipts-main ]
 
 <img width="1741" height="691" alt="image" src="https://github.com/user-attachments/assets/d145f117-b5c6-4e86-9f76-b3915d602aad" />
 
 
-### 7.  Open the folder and you will see the files
-
-#### "RIGHT" click on the "odysee_search.html" file and select "Open with"
+### 7. "RIGHT" click on the "odysee_search.html" file and select "Open with"
 
 <img width="1741" height="691" alt="image" src="https://github.com/user-attachments/assets/40ddf4e3-7a17-48c1-97fe-a5d6f25a906a" />
 
@@ -53,6 +51,7 @@ Video Transcript Search Engine
 
 ### 10.  Click on "Choose File" next to "Local Database:"
 <img width="257" height="93" alt="image" src="https://github.com/user-attachments/assets/b3f10809-d28d-4d03-8082-6ff826e9f762" />
+
 ### 11.  Goto the folder where you unzipped your files ( eg ~/Downloads/)
 
 <img width="1954" height="528" alt="image" src="https://github.com/user-attachments/assets/f4f7fb02-5ebb-41a7-92a5-e560e4950f20" />
@@ -66,9 +65,18 @@ Video Transcript Search Engine
 
 ### 14.  Your database is now ready for searching...! 
 
-#___________________________________________________________________
-## How to Seach keywords in all Video Transcripts
+# How to Seach keywords in all Video Transcripts
 
-### 14.  Enter you "search words" in the "Seach transcripts" search box AND click on "Search Button"
-### 15.  Each video is listed with hits for your search,  click on the Triangle next to each video to open the results for that video:
-### 16.  Results are marked in YELLOW.
+### 1.  Enter you "search words" in the "Seach transcripts" search box AND click on "Search Button"
+#### [let's search:  "Chocolate Milk"]
+
+<img width="1748" height="625" alt="image" src="https://github.com/user-attachments/assets/2c1d7bf8-948d-443a-bcb9-2886b5a29fdd" />
+
+### 2.  Each video is listed with hits for your search.  
+<img width="2069" height="1204" alt="image" src="https://github.com/user-attachments/assets/301d78f3-39a4-44b8-aa47-71a7b0dba099" />
+
+### 3. click on the Triangle next to each video to open the results for that video
+<img width="77" height="61" alt="image" src="https://github.com/user-attachments/assets/e4bb5f2b-4bfd-4cfb-8e47-a6b7cb29f7ae" />
+<img width="2034" height="1125" alt="image" src="https://github.com/user-attachments/assets/7f62f687-7a30-4890-8359-320e1e1575ab" />
+
+### 3.  Results are marked in YELLOW.
