@@ -63,7 +63,15 @@
     <!-- <h2 style="color: steelblue;">Odysee: Video Transcript Search</h2> -->
     <h2 style="color: darkblue;">Odysee: Video Transcript Search</h2>
 
-    <p><strong>Load your database:</strong> <input type="file" id="dbfile" accept=".db"></p>
+    <!-- ##################################################################################################### -->
+    <!-- <p><strong>Load your database:</strong> <input type="file" id="dbfile" accept=".db"></p> -->
+
+    <p>
+        <strong>Load your database:</strong>
+        <input type="file" id="dbfile" accept=".db">
+        <button onclick="updateDatabase()">🔄 Update Database (GitHub)</button>
+    </p>
+    <!-- ##################################################################################################### -->
 
     <input type="text" id="search" placeholder="Search transcripts..." style="width:70%;">
     <button onclick="searchDB()">Search</button>
@@ -73,6 +81,16 @@
     <script>
     // Load sql.js
     let db = null;
+
+    //<!-- ##################################################################################################### -->
+
+    // const DB_URL = "https://raw.githubusercontent.com/USER_NAME/REPOSITORY_NAME/main/videos.db";
+
+    const DB_URL = "https://raw.githubusercontent.com/bill-ludwig/thepeopleslorevideotranscipts/main/videos.db";
+
+
+    //<!-- ##################################################################################################### -->
+
 
     async function loadDatabase(file) {
         const buffer = await file.arrayBuffer();
@@ -250,6 +268,64 @@
         newWindow.document.close();
     }
 
+    // <!-- ##################################################################################################### -->
+    async function updateDatabase() {
+        try {
+            if (!DB_URL) throw new Error("DB_URL not set");
+
+            // 1. download latest DB from GitHub
+            const res = await fetch(DB_URL, { cache: "no-store" });
+            if (!res.ok) throw new Error("Failed to fetch latest DB");
+
+            const buffer = await res.arrayBuffer();
+            const u8 = new Uint8Array(buffer);
+
+            // 2. re-init sql.js and replace in-memory DB
+            const SQL = await initSqlJs({
+                locateFile: file =>
+                    `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`
+            });
+
+            db = new SQL.Database(u8);
+
+            // 3. auto-refresh current search (if any)
+            const query = document.getElementById("search").value.trim();
+            if (query) searchDB();
+
+            // 4. download timestamped backup copy
+            downloadSnapshot(u8);
+
+            alert("✅ Database updated from GitHub");
+        } catch (err) {
+            console.error(err);
+            alert("❌ Update failed: " + err.message);
+        }
+    }
+    // <!-- ##################################################################################################### -->
+
+    function downloadSnapshot(u8) {
+        const timestamp = new Date()
+            .toISOString()
+            .replace(/[:.]/g, "-");
+
+        const filename = `videos.${timestamp}.db`;
+
+        const blob = new Blob([u8], {
+            type: "application/octet-stream"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        URL.revokeObjectURL(url);
+    }
     async function searchDB() {
         const query = document.getElementById('search').value.trim();
         const resultsDiv = document.getElementById('results');
@@ -363,5 +439,4 @@
 
 </body>
 </html>
-
 
