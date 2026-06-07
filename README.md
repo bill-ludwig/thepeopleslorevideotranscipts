@@ -84,3 +84,38 @@ Video Transcript Search Engine
 ### 3.  Results are marked in YELLOW.
 
 # How to: Save a FULL Video Transcript
+
+1. Search for your "KEYWORD(s)" like above
+<img width="976" height="398" alt="image" src="https://github.com/user-attachments/assets/85dca507-aab6-408a-97fc-dc9ea881c7eb" />
+2. Click on the "Download Transcript" link next to the Video information
+<img width="453" height="96" alt="image" src="https://github.com/user-attachments/assets/b5f985d7-1451-45ca-9dda-1f62fc429214" />
+3. FULL Transcript opens in New Tab
+   <img width="2032" height="888" alt="image" src="https://github.com/user-attachments/assets/83b03f26-f4cc-4dcf-9513-8674637c372b" />
+ 
+5. Click on "PRINT" button
+<img width="222" height="126" alt="image" src="https://github.com/user-attachments/assets/daf1ac8a-6715-4856-9b76-2e6faed601f6" />
+
+6. Choose Printer Type(Destination) : "Save as PDF"   (or "PDF document" etc)
+<img width="1668" height="1114" alt="image" src="https://github.com/user-attachments/assets/20e02d95-aa6b-42ba-a81e-87c47c590e3b" />
+
+7. Click "Save" (or Print)
+<img width="105" height="73" alt="image" src="https://github.com/user-attachments/assets/a88c6ec8-858a-4b2b-9aa7-4f5348c8eb43" />
+   
+9. Done. you have your own FULL transcript copy now.
+
+<img width="1469" height="49" alt="image" src="https://github.com/user-attachments/assets/c426421e-9dc2-4fc5-9229-2fff67373c24" />
+
+
+<img width="1884" height="846" alt="image" src="https://github.com/user-attachments/assets/a29a64a0-7584-4c20-9665-4ac8291252d7" />
+
+
+
+
+
+
+
+
+
+
+
+
