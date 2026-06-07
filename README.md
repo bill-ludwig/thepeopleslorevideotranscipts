@@ -11,9 +11,10 @@ Video Transcript Search Engine
 
 ## How to download, install, open transcript database
 
-### 1. Find the green "Code" button above
+### 1. Find the "Code" button above
     
 <img width="204" height="88" alt="image" src="https://github.com/user-attachments/assets/19b8282f-d8e8-4e08-bb4b-fda95b87e46f" />
+<img width="203" height="93" alt="image" src="https://github.com/user-attachments/assets/4d7bd4cb-0c1b-4653-9e3a-22e404b7a02f" />
 
 ### 2. LEFT Click on the button, and a drop down window will appear
 
