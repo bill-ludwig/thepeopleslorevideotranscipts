@@ -88,8 +88,9 @@ Video Transcript Search Engine
 ### 1. Search for your "KEYWORD(s)" like above
 <img width="976" height="398" alt="image" src="https://github.com/user-attachments/assets/85dca507-aab6-408a-97fc-dc9ea881c7eb" />
 
-### 2. Click on the "Download Transcript" link next to the Video information
-<img width="453" height="96" alt="image" src="https://github.com/user-attachments/assets/b5f985d7-1451-45ca-9dda-1f62fc429214" />
+### 2. Click on the "Download Transcript" link next to the Video information\
+<img width="926" height="57" alt="image" src="https://github.com/user-attachments/assets/7ab90cb7-3186-4582-82fd-ace2f67021d4" />
+
 
 ### 3. FULL Transcript opens in New Tab
 <img width="2032" height="888" alt="image" src="https://github.com/user-attachments/assets/83b03f26-f4cc-4dcf-9513-8674637c372b" />
@@ -113,7 +114,9 @@ Video Transcript Search Engine
 # How to: WATCH the VIDEO side-by-side with the TRANSCRIPT
 
 ### 1. On the SEARCH page (or the FULL TRANSCRIPT Page) RIGHT CLICK  on the Video: Title
+
 #### [Note:  this will open a "DROP DOWN" menu ]
+
 <img width="1718" height="818" alt="image" src="https://github.com/user-attachments/assets/588d4bc3-dd67-4ab8-aeed-99464f97f05f" />
 
 ### 2. SELECT "Open Link in Split View"
