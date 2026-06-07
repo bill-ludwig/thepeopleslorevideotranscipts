@@ -3,9 +3,9 @@ Video Transcript Search Engine
 
 ## Instructions
 
-- [How to download, install, open transcript database](##how-to-download-install-open-transcript-database)
-- [How to Seach keywords in all Video Transcripts](##how-to-search-keywords-in-all-video-transcripts)
-- [How to UPDATE your database (eg after Thursday video uploaded)](##how-to-update-your-database-eg-after-thursday-video-uploaded)
+- [How to download, install, open transcript database](#how-to-download-install-open-transcript-database)
+- [How to Seach keywords in all Video Transcripts](#how-to-search-keywords-in-all-video-transcripts)
+- [How to UPDATE your database (eg after Thursday video uploaded)](#how-to-update-your-database-eg-after-thursday-video-uploaded)
 
   
 
