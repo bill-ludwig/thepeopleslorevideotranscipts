@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Video Playlist Status Dashboard</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+    background: #f5f5f5;
+}
+
+h1 { color: #222; }
+
+input, button, select {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+}
+
+/* ===== NEW CHART AREA ===== */
+#statusChart {
+    display: block;
+    margin: 10px 0 20px 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* ===== ORIGINAL STYLES ===== */
+
+.video-group {
+    background: white;
+    margin: 12px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.video-header {
+    background: #e8f0f8;
+    padding: 12px 15px;
+    cursor: pointer;
+    list-style: none;
+}
+
+.video-header::-webkit-details-marker { display: none; }
+
+.video-title {
+    font-size: 1.05em;
+    font-weight: bold;
+}
+
+.video-title a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.status {
+    display: inline-block;
+    margin-left: 10px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.status-NEW { background:#ddd; }
+.status-DOWNLOADING { background:#fff3cd; }
+.status-DOWNLOADED { background:#d1ecf1; }
+.status-TRANSCRIBING { background:#ffeeba; }
+.status-COMPLETE { background:#d4edda; }
+.status-ERROR { background:#f8d7da; }
+
+.video-details { padding: 15px; }
+
+.grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 8px;
+}
+
+.label { font-weight: bold; color: #555; }
+
+.value { color: #222; }
+
+.stats {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #ddd;
+}
+
+.error {
+    color: #c62828;
+    font-weight: bold;
+}
+
+.summary {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+details[open] .video-header {
+    background: #d4e6f8;
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/sql-wasm.min.js"></script>
+</head>
+
+<body>
+
+<h1>Playlist Video Status Dashboard</h1>
+
+<p>
+    <strong>Load Database:</strong>
+    <input type="file" id="dbfile" accept=".db">
+</p>
+
+<button onclick="loadVideos()">Refresh Videos</button>
+
+<!-- SORT CONTROLS -->
+<label style="margin-left:20px;">Sort By:</label>
+
+<select id="sortColumn">
+    <option value="id">id</option>
+    <option value="url">url</option>
+    <option value="video_id">video_id</option>
+    <option value="title">title</option>
+    <option value="upload_date" selected>upload_date</option>
+    <option value="restricted_filename">restricted_filename</option>
+    <option value="actual_filename">actual_filename</option>
+    <option value="filesize">filesize</option>
+    <option value="duration">duration</option>
+    <option value="status">status</option>
+    <option value="download_attempts">download_attempts</option>
+    <option value="last_attempt">last_attempt</option>
+    <option value="download_completed">download_completed</option>
+    <option value="frames_completed">frames_completed</option>
+    <option value="audio_completed">audio_completed</option>
+    <option value="transcript_completed">transcript_completed</option>
+    <option value="error_message">error_message</option>
+    <option value="created_at">created_at</option>
+</select>
+
+<label style="margin-left:15px;">Order By:</label>
+
+<select id="sortDirection">
+    <option value="DESC" selected>DESC</option>
+    <option value="ASC">ASC</option>
+</select>
+
+<button onclick="loadVideos()">Apply Sort</button>
+
+<!-- ✅ NEW: STATUS SUMMARY CHART -->
+<canvas id="statusChart" height="130"></canvas>
+
+<div id="results"></div>
+
+<script>
+
+let db = null;
+
+async function loadDatabase(file) {
+    const buffer = await file.arrayBuffer();
+
+    const SQL = await initSqlJs({
+        locateFile: file =>
+            `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`
+    });
+
+    db = new SQL.Database(new Uint8Array(buffer));
+
+    alert("✅ Database loaded");
+
+    loadVideos();
+}
+
+document.getElementById('dbfile')
+    .addEventListener('change', e => {
+        if (e.target.files.length > 0) {
+            loadDatabase(e.target.files[0]);
+        }
+    });
+
+document.getElementById('sortColumn')
+    .addEventListener('change', () => db && loadVideos());
+
+document.getElementById('sortDirection')
+    .addEventListener('change', () => db && loadVideos());
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text ?? '';
+    return div.innerHTML;
+}
+
+function formatDuration(seconds) {
+    if (!seconds) return "N/A";
+
+    const hrs = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = Math.floor(seconds % 60);
+
+    return hrs > 0
+        ? `${hrs}:${mins.toString().padStart(2,'0')}:${secs.toString().padStart(2,'0')}`
+        : `${mins}:${secs.toString().padStart(2,'0')}`;
+}
+
+function formatBytes(bytes) {
+    if (!bytes) return 'N/A';
+
+    const sizes = ['Bytes','KB','MB','GB','TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(1024));
+
+    return (bytes / Math.pow(1024, i)).toFixed(2) + ' ' + sizes[i];
+}
+
+/* =========================
+   NEW: STATUS BAR CHART
+========================= */
+// function renderStatusChart(data) {
+
+//     const canvas = document.getElementById("statusChart");
+//     const ctx = canvas.getContext("2d");
+
+//     const width = canvas.width = canvas.offsetWidth;
+//     // const height = canvas.height = 130;
+//     const height = canvas.height = 150;
+
+//     ctx.clearRect(0, 0, width, height);
+
+//     if (!data.length) return;
+
+//     const max = Math.max(...data.map(d => d.count));
+
+//     const barWidth = width / data.length;
+
+//     ctx.font = "12px Arial";
+//     ctx.textAlign = "center";
+
+//     data.forEach((d, i) => {
+
+//         const x = i * barWidth;
+//         const barHeight = (d.count / max) * (height - 30);
+
+//         // bar
+//         ctx.fillStyle = "#4a90e2";
+//         ctx.fillRect(
+//             x + 10,
+//             height - barHeight - 20,
+//             barWidth - 20,
+//             barHeight
+//         );
+
+//         // label
+//         ctx.fillStyle = "#333";
+//         ctx.fillText(d.status, x + barWidth / 2, height - 5);
+
+//         // value
+//         ctx.fillText(d.count, x + barWidth / 2, height - barHeight - 25);
+//     });
+// }
+
+/* =========================
+   HORIZONTAL PIPELINE CHART
+========================= */
+function renderStatusChart(data) {
+
+    const canvas = document.getElementById("statusChart");
+    const ctx = canvas.getContext("2d");
+
+    const rowHeight = 32;
+    const leftMargin = 140;
+    const rightMargin = 60;
+    const topMargin = 10;
+
+    const width =
+        canvas.width =
+        canvas.offsetWidth;
+
+    const height =
+        canvas.height =
+        Math.max(
+            120,
+            data.length * rowHeight + topMargin + 10
+        );
+
+    ctx.clearRect(0, 0, width, height);
+
+    if (!data.length) return;
+
+    const max =
+        Math.max(...data.map(d => d.count));
+
+    const chartWidth =
+        width - leftMargin - rightMargin;
+
+    ctx.font = "13px Arial";
+    ctx.textBaseline = "middle";
+
+    data.forEach((d, i) => {
+
+        const y =
+            topMargin + i * rowHeight;
+
+        const barWidth =
+            max > 0
+                ? (d.count / max) * chartWidth
+                : 0;
+
+        /* label */
+
+        ctx.fillStyle = "#333";
+        ctx.textAlign = "left";
+
+        ctx.fillText(
+            d.status,
+            10,
+            y + rowHeight / 2
+        );
+
+        /* bar */
+
+        ctx.fillStyle = "#4a90e2";
+
+        ctx.fillRect(
+            leftMargin,
+            y + 5,
+            barWidth,
+            rowHeight - 10
+        );
+
+        /* value */
+
+        ctx.fillStyle = "#000";
+        ctx.textAlign = "left";
+
+        ctx.fillText(
+            d.count,
+            leftMargin + barWidth + 8,
+            y + rowHeight / 2
+        );
+    });
+}
+/* =========================
+   MAIN LOAD FUNCTION
+========================= */
+async function loadVideos() {
+
+    const resultsDiv = document.getElementById('results');
+
+    if (!db) {
+        resultsDiv.innerHTML =
+            '<p style="color:red;">Load a video.db first.</p>';
+        return;
+    }
+
+    try {
+
+        const sortColumn =
+            document.getElementById('sortColumn').value;
+
+        const sortDirection =
+            document.getElementById('sortDirection').value;
+
+        const allowedColumns = [
+            'id','url','video_id','title','upload_date',
+            'restricted_filename','actual_filename','filesize',
+            'duration','status','download_attempts','last_attempt',
+            'download_completed','frames_completed','audio_completed',
+            'transcript_completed','error_message','created_at'
+        ];
+
+        const column =
+            allowedColumns.includes(sortColumn) ? sortColumn : 'upload_date';
+
+        const direction =
+            sortDirection === 'ASC' ? 'ASC' : 'DESC';
+
+        /* ===== MAIN QUERY ===== */
+        const sql = `
+        SELECT v.*,
+            (SELECT COUNT(*) FROM transcript_segments t WHERE t.video_id = v.id) AS transcript_count,
+            (SELECT COUNT(*) FROM frames f WHERE f.video_id = v.id) AS frame_count
+        FROM videos v
+        ORDER BY v.${column} ${direction}
+        `;
+
+        const stmt = db.prepare(sql);
+
+        let html = '';
+        let count = 0;
+
+        while (stmt.step()) {
+            count++;
+
+            const row = stmt.getAsObject();
+
+            const statusClass =
+                `status-${(row.status || 'NEW').replace(/\s+/g,'_')}`;
+
+            html += `
+            <details class="video-group">
+                <summary class="video-header">
+                    <div class="video-title">
+                        <a href="${escapeHtml(row.url)}" target="_blank">
+                            ${escapeHtml(row.title || 'Untitled')}
+                        </a>
+                        <span class="status ${statusClass}">
+                            ${escapeHtml(row.status || 'NEW')}
+                        </span>
+                    </div>
+                    <div class="summary">
+                        Upload Date: ${escapeHtml(row.upload_date || 'N/A')}
+                    </div>
+                </summary>
+
+                <div class="video-details">
+                    <div class="grid">
+                        <div class="label">Database ID</div>
+                        <div class="value">${row.id}</div>
+
+                        <div class="label">Video ID</div>
+                        <div class="value">${escapeHtml(row.video_id || 'N/A')}</div>
+
+                        <div class="label">Duration</div>
+                        <div class="value">${formatDuration(row.duration)}</div>
+
+                        <div class="label">File Size</div>
+                        <div class="value">${formatBytes(row.filesize)}</div>
+
+                        <div class="label">Filename</div>
+                        <div class="value">${escapeHtml(row.actual_filename || 'N/A')}</div>
+
+                        <div class="label">Attempts</div>
+                        <div class="value">${row.download_attempts || 0}</div>
+
+                        <div class="label">Created</div>
+                        <div class="value">${escapeHtml(row.created_at || 'N/A')}</div>
+                    </div>
+
+                    <div class="stats">
+                        <div class="grid">
+                            <div class="label">Download Complete</div>
+                            <div class="value">${escapeHtml(row.download_completed || 'No')}</div>
+
+                            <div class="label">Frames Complete</div>
+                            <div class="value">${escapeHtml(row.frames_completed || 'No')}</div>
+
+                            <div class="label">Audio Complete</div>
+                            <div class="value">${escapeHtml(row.audio_completed || 'No')}</div>
+
+                            <div class="label">Transcript Complete</div>
+                            <div class="value">${escapeHtml(row.transcript_completed || 'No')}</div>
+
+                            <div class="label">Transcript Segments</div>
+                            <div class="value">${row.transcript_count}</div>
+
+                            <div class="label">Frames Extracted</div>
+                            <div class="value">${row.frame_count}</div>
+                        </div>
+                    </div>
+
+                    ${
+                        row.error_message
+                        ? `<div class="error">Error: ${escapeHtml(row.error_message)}</div>`
+                        : ''
+                    }
+                </div>
+            </details>`;
+        }
+
+        stmt.free();
+
+        /* ===== STATUS AGGREGATION QUERY (NEW) ===== */
+        // const statusStmt = db.prepare(`
+        //     SELECT status, COUNT(*) AS count
+        //     FROM videos
+        //     GROUP BY status
+        //     ORDER BY count DESC
+        // `);
+
+        const statusStmt = db.prepare(`
+        SELECT
+        (
+            SELECT COUNT(*) FROM videos
+        ) AS total_videos,
+
+        (
+            SELECT COUNT(*)
+            FROM videos
+            WHERE download_completed IS NOT NULL
+        ) AS downloaded,
+
+        (
+            SELECT COUNT(*)
+            FROM videos
+            WHERE frames_completed IS NOT NULL
+        ) AS frames,
+
+        (
+            SELECT COUNT(*)
+            FROM videos
+            WHERE audio_completed IS NOT NULL
+        ) AS audio,
+
+        (
+            SELECT COUNT(*)
+            FROM videos
+            WHERE transcript_completed IS NOT NULL
+        ) AS transcript,
+
+        (
+            SELECT COUNT(*)
+            FROM videos
+            WHERE error_message IS NOT NULL
+              AND error_message <> ''
+        ) AS errors
+        `);
+
+        // const statusData = [];
+
+        // while (statusStmt.step()) {
+        //     statusData.push(statusStmt.getAsObject());
+        // }
+
+        statusStmt.step();
+
+        const s = statusStmt.getAsObject();
+
+        const statusData = [
+            {
+                status: 'Downloaded',
+                count: s.downloaded
+            },
+            {
+                status: 'Frames',
+                count: s.frames
+            },
+            {
+                status: 'Audio',
+                count: s.audio
+            },
+            {
+                status: 'Transcript',
+                count: s.transcript
+            },
+            {
+                status: 'Remaining',
+                count: s.total_videos - s.transcript
+            },
+            {
+                status: 'Errors',
+                count: s.errors
+            }
+        ];
+
+        statusStmt.free();
+
+        // render chart
+        renderStatusChart(statusData);
+
+        resultsDiv.innerHTML =
+            `<h3>Total Videos: ${count}</h3>` + html;
+
+    } catch (err) {
+        console.error(err);
+        resultsDiv.innerHTML =
+            `<p style="color:red;">${escapeHtml(err.message)}</p>`;
+    }
+}
+
+</script>
+
+</body>
+</html>

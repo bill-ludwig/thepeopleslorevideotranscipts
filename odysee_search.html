@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Odysee Transcript Search</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+    h1 { color: #222; }
+    input, button { padding: 10px; margin: 5px; font-size: 16px; }
+    #results { margin-top: 20px; }
+    
+    .video-group {
+        background: white;
+        margin: 12px 0;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        overflow: hidden;
+    }
+    .video-header {
+        background: #e8f0f8;
+        padding: 12px 15px;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 1.1em;
+        border-bottom: 1px solid #ddd;
+    }
+    .video-header a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+    .video-header a:hover { text-decoration: underline; }
+    
+    .matches {
+        padding: 10px 15px;
+        max-height: 600px;
+        overflow-y: auto;
+    }
+    .match {
+        background: #fafafa;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 6px;
+        border-left: 4px solid #0066cc;
+    }
+    .highlight { background-color: yellow; font-weight: bold; padding: 2px 4px; border-radius: 3px; }
+    .meta { color: #555; font-size: 0.9em; margin-bottom: 6px; }
+    .timestamp { color: #0066cc; font-weight: bold; }
+
+    /* Make it look nicer */
+    details[open] .video-header {
+        background: #d4e6f8;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/sql-wasm.min.js"></script>
+</head>
+<body>
+
+    <!-- <h1>Odysee Channel Transcript Search</h1> -->
+<!--     <h1>The People's Lore: Terra Australis</h1>
+    <h2>Odysee: Video Transcript Search</h2> -->
+
+    <h1 style="color: darkgreen;">The People's Lore: Terra Australis</h1>
+    <!-- <h2 style="color: steelblue;">Odysee: Video Transcript Search</h2> -->
+    <h2 style="color: darkblue;">Odysee: Video Transcript Search</h2>
+
+    <p><strong>Load your database:</strong> <input type="file" id="dbfile" accept=".db"></p>
+
+    <input type="text" id="search" placeholder="Search transcripts..." style="width:70%;">
+    <button onclick="searchDB()">Search</button>
+
+    <div id="results"></div>
+
+    <script>
+    // Load sql.js
+    let db = null;
+
+    async function loadDatabase(file) {
+        const buffer = await file.arrayBuffer();
+        const SQL = await initSqlJs({
+            locateFile: file => `https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.12.0/${file}`
+        });
+        db = new SQL.Database(new Uint8Array(buffer));
+        alert("✅ Database loaded successfully!");
+    }
+
+    document.getElementById('dbfile').addEventListener('change', (e) => {
+        if (e.target.files.length > 0) loadDatabase(e.target.files[0]);
+    });
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    function highlightText(text, term) {
+        if (!term) return escapeHtml(text);
+        const regex = new RegExp(`(${escapeHtml(term)})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+    }
+
+    function formatTime(seconds) {
+        if (!seconds) return '00:00';
+        const min = Math.floor(seconds / 60);
+        const sec = Math.floor(seconds % 60);
+        return `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
+    }
+
+
+    async function downloadTranscript(videoId) {
+
+        const sql = `
+            SELECT
+                v.title,
+                v.url,
+                t.start_time,
+                t.end_time,
+                t.text
+            FROM videos v
+            JOIN transcript_segments t
+                ON v.id = t.video_id
+            WHERE v.id = ?
+            ORDER BY t.segment_number
+        `;
+
+        const stmt = db.prepare(sql);
+        stmt.bind([videoId]);
+
+        let title = 'Transcript';
+        let url = '';
+
+        let transcriptHtml = '';
+
+        while (stmt.step()) {
+
+            const row = stmt.getAsObject();
+
+            title = row.title || 'Transcript';
+            url = row.url || '';
+
+            transcriptHtml += `
+                <div class="segment">
+                    <span class="timestamp">
+                        ${formatTime(row.start_time)}
+                    </span>
+                    <span class="text">
+                        ${escapeHtml(row.text)}
+                    </span>
+                </div>
+            `;
+        }
+
+        stmt.free();
+
+        const transcriptPage = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <meta charset="UTF-8">
+
+    <title>${escapeHtml(title)}</title>
+
+    <style>
+
+    body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 20px;
+        background: #f5f5f5;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+
+    .video-link {
+        margin-bottom: 25px;
+    }
+
+    .video-link a {
+        color: #0066cc;
+        text-decoration: none;
+    }
+
+
+    .segment {
+        background: white;
+        margin-bottom: 8px;
+        padding: 10px 12px;
+        border-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,.1);
+
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .timestamp {
+        font-weight: bold;
+        color: #0066cc;
+        min-width: 55px;
+        flex-shrink: 0;
+    }
+
+    .text {
+        flex: 1;
+        line-height: 1.5;
+        white-space: normal;
+    }
+    </style>
+
+    </head>
+
+    <body>
+
+    <h1>
+        <a href="${url}" target="_blank">
+            ${escapeHtml(title)}
+        </a>
+    </h1>
+
+    <br>
+    <div class="toolbar">
+        <h3>
+        <a href="#" onclick="window.print(); return false;" class="print-link">
+            🖨️ PRINT
+        </a>
+        </h3>
+        <br>
+    </div>
+
+
+    ${transcriptHtml}
+
+    </body>
+    </html>
+    `;
+
+    // <div class="video-link">
+    //     <a href="${url}" target="_blank">
+    //         Open Video
+    //     </a>
+    // </div>
+
+        const newWindow = window.open('', '_blank');
+
+        newWindow.document.open();
+        newWindow.document.write(transcriptPage);
+        newWindow.document.close();
+    }
+
+    async function searchDB() {
+        const query = document.getElementById('search').value.trim();
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        if (!db) {
+            resultsDiv.innerHTML = '<p style="color:red;">Please load your videos.db file first.</p>';
+            return;
+        }
+        if (!query) {
+            resultsDiv.innerHTML = '<p>Please enter a search term.</p>';
+            return;
+        }
+
+        try {
+            const sql = `
+                SELECT 
+                    v.id AS video_id,
+                    v.title,
+                    v.url,
+                    v.upload_date,
+                    v.duration,
+                    t.start_time,
+                    t.end_time,
+                    t.text
+                FROM videos v
+                JOIN transcript_segments t ON v.id = t.video_id
+                WHERE t.text LIKE ?
+                ORDER BY v.upload_date DESC, v.id, t.start_time ASC
+            `;
+
+            const stmt = db.prepare(sql);
+            stmt.bind([`%${query}%`]);
+
+            // let html = `<h2>Results for: "${query}"</h2>`;
+            let html = `<h2>Results for: "<span style="color:red;">${query}</span>"</h2>`;
+
+            let currentVideoId = null;
+
+            while (stmt.step()) {
+                const row = stmt.getAsObject();
+
+                if (row.video_id !== currentVideoId) {
+                    if (currentVideoId !== null) {
+                        html += `</div></details>`;
+                    }
+
+                    currentVideoId = row.video_id;
+
+                    html += `
+                        <details class="video-group">
+                            <summary class="video-header">
+                                <a href="${escapeHtml(row.url)}" target="_blank">
+                                    ${escapeHtml(row.title || 'Untitled')}
+                                </a>
+                                <br>
+                                    <small>
+                                        Uploaded: ${row.upload_date || 'N/A'} |
+                                        Duration: ${row.duration ? (row.duration/60).toFixed(1) + ' min' : 'N/A'} |
+                                        <a href="#"
+                                           onclick="downloadTranscript(${row.video_id}); return false;">
+                                            Download Transcript
+                                        </a>
+                                    </small>
+                            </summary>
+                            <div class="matches">`;
+                }
+
+                                // <small>
+                                //     Uploaded: ${row.upload_date || 'N/A'} | 
+                                //     Duration: ${row.duration ? (row.duration/60).toFixed(1) + ' min' : 'N/A'}
+                                // </small>
+                // Context
+                const text = row.text || '';
+                const words = text.split(/\s+/);
+                const idx = words.findIndex(w => w.toLowerCase().includes(query.toLowerCase()));
+                
+                let context = text;
+                if (idx !== -1) {
+                    const start = Math.max(0, idx - 12);
+                    const end = Math.min(words.length, idx + 13);
+                    context = words.slice(start, end).join(' ');
+                }
+
+                html += `
+                    <div class="match">
+                        <div class="meta">
+                            <span class="timestamp">⏱ ${formatTime(row.start_time)} — ${formatTime(row.end_time)}</span>
+                        </div>
+                        <div>${highlightText(context, query)}</div>
+                    </div>`;
+            }
+
+            if (currentVideoId !== null) {
+                html += `</div></details>`;
+            }
+
+            if (!html.includes('<details')) {
+                html += '<p>No matches found.</p>';
+            }
+
+            resultsDiv.innerHTML = html;
+            stmt.free();
+
+        } catch (err) {
+            console.error(err);
+            resultsDiv.innerHTML = `<p style="color:red;">Error: ${escapeHtml(err.message)}</p>`;
+        }
+    }
+    </script>
+
+</body>
+</html>
+
+
