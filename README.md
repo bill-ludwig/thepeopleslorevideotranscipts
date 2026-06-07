@@ -122,6 +122,7 @@ Video Transcript Search Engine
 ### 2. SELECT "Open Link in Split View"
 
 <img width="516" height="90" alt="image" src="https://github.com/user-attachments/assets/38717755-afdc-442d-9fd9-69a8c1b6e521" />
+
 ### 3. Video OPEN's next to your Transcript. 
 
 <img width="2056" height="1050" alt="image" src="https://github.com/user-attachments/assets/234320f3-4622-4cfd-85f4-d68073b365ef" />
