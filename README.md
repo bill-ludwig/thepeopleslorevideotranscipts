@@ -18,7 +18,7 @@ Video Transcript Search Engine
 
 ### 2. LEFT Click on the button, and a drop down window will appear
 
-<img width="731" height="576" alt="image" src="https://github.com/user-attachments/assets/1ef12050-49a1-44cf-bbb5-99e5c8801a76" />
+<img width="923" height="615" alt="Screenshot from 2026-06-24 21-21-08" src="https://github.com/user-attachments/assets/b98c43a3-0cdc-4bbb-9cf1-e00719c5bd2f" />
 
 
 ### 3. Click on "Download ZIP" at the bottom:
