@@ -7,7 +7,7 @@ Video Transcript Search Engine
 - [How to: SEARCH keywords in all Video Transcripts](#how-to-search-keywords-in-all-video-transcripts)
 - [How to: Save a FULL Video Transcript](#how-to-save-a-full-video-transcript)
 - [How to: WATCH the VIDEO side-by-side with the TRANSCRIPT](how-to-watch-the-video-side-by-side-with-the-transcript)  
-- [How to: UPDATE your database (eg after Thursday video uploaded)](#how-to-update-your-database-eg-after-thursday-video-uploaded)
+
   
 ## How to: download, install, and open transcript database
 
