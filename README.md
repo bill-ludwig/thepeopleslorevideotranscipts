@@ -27,41 +27,52 @@ Video Transcript Search Engine
 
 
 ### 4.  Save the ZIP file to you local computer (eg. Downloads folder)
+<img width="1226" height="415" alt="Screenshot from 2026-06-24 21-15-49" src="https://github.com/user-attachments/assets/e65c7590-1bfc-45d7-bedd-561bbc6223f8" />
 
-<img width="1839" height="864" alt="image" src="https://github.com/user-attachments/assets/46ef4c08-3549-4e80-8d9c-b0f30a6b858f" />
+### 5.  After download is complete "Double-Click" on the ZIP file ( extracts the zip file)
 
-### 5.  Double-Click on the ZIP file ( extracts the zip file)
-<img width="573" height="630" alt="image" src="https://github.com/user-attachments/assets/bbc0ec1e-4d7b-4e43-a06a-73e7e80d8f92" />
+<img width="972" height="529" alt="Screenshot from 2026-06-24 21-16-33" src="https://github.com/user-attachments/assets/c0a1f539-62e2-4d93-b03b-fd28c66a4e04" />
 
 ### 6.  You should see a Folder that looks something like this
 #### [folder: thepeopleslorevideotranscipts-main ]
 
-<img width="1741" height="691" alt="image" src="https://github.com/user-attachments/assets/d145f117-b5c6-4e86-9f76-b3915d602aad" />
+<img width="1861" height="666" alt="Screenshot from 2026-06-24 21-17-43" src="https://github.com/user-attachments/assets/7a17a7ef-9c50-4fe6-9f2b-a674946c6a37" />
 
 
-### 7. "RIGHT" click on the "odysee_search.html" file and select "Open with"
 
-<img width="1741" height="691" alt="image" src="https://github.com/user-attachments/assets/40ddf4e3-7a17-48c1-97fe-a5d6f25a906a" />
+### 7. "RIGHT" click on the "transcript_search.html" file and select "Open with":
+
+<img width="1130" height="934" alt="Screenshot from 2026-06-24 21-34-27" src="https://github.com/user-attachments/assets/a9ce9178-4f62-48d1-8966-442ff1454081" />
+
+
 
 ### 8. Choose your Internet browser, eg, Chrome, Firefox, Brave, Edge
 ### 9. Your "Search" page should now display
 
-<img width="2084" height="709" alt="image" src="https://github.com/user-attachments/assets/69276b25-57eb-4104-8038-7a2c778ce3d6" />
+<img width="2065" height="830" alt="Screenshot from 2026-06-24 21-37-13" src="https://github.com/user-attachments/assets/d8989fb6-20bd-452d-8c97-f3d38b0ba868" />
 
 
-### 10.  Click on "Choose File" next to "Local Database:"
-<img width="257" height="93" alt="image" src="https://github.com/user-attachments/assets/b3f10809-d28d-4d03-8082-6ff826e9f762" />
+### 10.  Click on "Load Database" button:
+
+
+<img width="540" height="213" alt="Screenshot from 2026-06-24 21-39-51" src="https://github.com/user-attachments/assets/c7f12d73-aca5-4042-a0a8-3c14112725b2" />
+
+
+
+
 
 ### 11.  Goto the folder where you unzipped your files ( eg ~/Downloads/)
 
-<img width="1954" height="528" alt="image" src="https://github.com/user-attachments/assets/f4f7fb02-5ebb-41a7-92a5-e560e4950f20" />
+<img width="1445" height="370" alt="Screenshot from 2026-06-24 21-41-21" src="https://github.com/user-attachments/assets/d44c383c-416d-467c-b0c9-7a6beec5587f" />
 
-### 12.  double click on the videos.db file
-<img width="549" height="281" alt="image" src="https://github.com/user-attachments/assets/0901f8ff-019c-464e-8a72-5ce9354b6e87" />
+### 12.  double click on the transcripts_YYYY.db file
 
 ### 13.  When loaded you get this message, click "OK"
 
-<img width="1622" height="424" alt="image" src="https://github.com/user-attachments/assets/5631b966-4ad7-4336-bc5c-4cdb95366fd6" />
+<img width="1490" height="324" alt="Screenshot from 2026-06-24 21-44-58" src="https://github.com/user-attachments/assets/8e9f4620-37ac-41cd-861f-cf7cbdcb175a" />
+
+
+
 
 ### 14.  Your database is now ready for searching...! 
 
@@ -70,18 +81,19 @@ Video Transcript Search Engine
 ### 1.  Enter you "search words" in the "Seach transcripts" search box AND click on "Search Button"
 #### [let's search:  "Chocolate Milk"]
 
-<img width="1748" height="625" alt="image" src="https://github.com/user-attachments/assets/2c1d7bf8-948d-443a-bcb9-2886b5a29fdd" />
+<img width="1697" height="435" alt="Screenshot from 2026-06-24 21-47-24" src="https://github.com/user-attachments/assets/2f2bae48-d454-4301-88e8-23694494a2eb" />
 
 ### 2.  Each video is listed with hits for your search.  
-#### [Note: Here three (3) videos have the words "Chocolate Milk"]
+<img width="2041" height="1246" alt="Screenshot from 2026-06-24 22-03-42" src="https://github.com/user-attachments/assets/62f11d9e-3d33-43f9-99af-df17dcf41388" />
 
-<img width="2069" height="1204" alt="image" src="https://github.com/user-attachments/assets/301d78f3-39a4-44b8-aa47-71a7b0dba099" />
 
 ### 3. click on the Triangle next to each video to open the results for that video
-<img width="77" height="61" alt="image" src="https://github.com/user-attachments/assets/e4bb5f2b-4bfd-4cfb-8e47-a6b7cb29f7ae" />
-<img width="2034" height="1125" alt="image" src="https://github.com/user-attachments/assets/7f62f687-7a30-4890-8359-320e1e1575ab" />
+<img width="89" height="106" alt="Screenshot from 2026-06-24 22-06-58" src="https://github.com/user-attachments/assets/58c8dcb0-9e89-4d6d-b1b0-c7506905fbfb" />
 
 ### 4.  Results are marked in YELLOW.
+<img width="2041" height="1246" alt="Screenshot from 2026-06-24 22-05-04" src="https://github.com/user-attachments/assets/00b340ec-fc04-427e-9a72-db6a07d906bd" />
+
+
 
 # How to: Save a FULL Video Transcript
 
@@ -117,15 +129,15 @@ Video Transcript Search Engine
 
 #### [Note:  this will open a "DROP DOWN" menu ]
 
-<img width="1718" height="818" alt="image" src="https://github.com/user-attachments/assets/588d4bc3-dd67-4ab8-aeed-99464f97f05f" />
+
 
 ### 2. SELECT "Open Link in Split View"
 
-<img width="516" height="90" alt="image" src="https://github.com/user-attachments/assets/38717755-afdc-442d-9fd9-69a8c1b6e521" />
+<img width="1529" height="783" alt="Screenshot from 2026-06-24 22-10-16" src="https://github.com/user-attachments/assets/4102e27e-0b83-4abb-a483-b42877d89e5a" />
 
 ### 3. Video OPEN's next to your Transcript. 
+<img width="2063" height="1364" alt="Screenshot from 2026-06-24 22-13-38" src="https://github.com/user-attachments/assets/0095ee86-bd1c-4470-909f-938d32a1124c" />
 
-<img width="2056" height="1050" alt="image" src="https://github.com/user-attachments/assets/234320f3-4622-4cfd-85f4-d68073b365ef" />
 
 ### You can now SCROLL your TRANSCRIPT up/down on the LEFT side. 
 ### On the RIGHT side the VIDEO will play.  
